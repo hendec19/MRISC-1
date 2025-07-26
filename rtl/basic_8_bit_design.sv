@@ -1,9 +1,9 @@
 module MRISC(
-	input logic clk,
-	input logic resetn,
-	input logic[7:0] inputBus,
+	input logic clk, 
+	input logic resetn, 
+	input logic[7:0] inputBus, 
 	output logic [7:0] outputBus
-	)
+	);
 
 	// opcodes
 	typedef enum {
@@ -34,12 +34,12 @@ module MRISC(
 	// program counter
 	logic PC_en;
 	logic PC_out;
-	logic jmp_en;
+	logic JMP_en;
 	always_ff @(posedge clk, negedge resetn) begin
 		if (~resetn) begin
 			PC <= 8'd0;
 		end
-		else if (jmp_en) begin
+		else if (JMP_en) begin
 			PC <= mainBus;
 		end
 		else if (PC_en) begin
@@ -62,7 +62,7 @@ module MRISC(
 
 	// memory address register
 	logic MA_in;
-	always_ff @(posedge clk, negedge resetn begin
+	always_ff @(posedge clk, negedge resetn) begin
 		if (~resetn) begin
 			MA <= 0;
 		end
@@ -149,7 +149,7 @@ module MRISC(
 					PC_out = 1;
 					PC_en = 1;
 					MA_in = 1;
-				end if
+				end
 				else if (IC == 3'd1) begin
 					RAM_out = 1;
 					IR_in = 1;
@@ -163,7 +163,7 @@ module MRISC(
 				if (IC == 3'd0) begin
 					PC_out = 1;
 					MA_in = 1;
-				end if
+				end
 				else if (IC == 3'd1) begin
 					RAM_out = 1;
 					IR_in = 1;
@@ -194,4 +194,4 @@ module MRISC(
 
 
 
-end module
+endmodule
